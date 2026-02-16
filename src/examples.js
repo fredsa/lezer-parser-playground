@@ -7,6 +7,10 @@ export const example6502 = `
 
 	processor 6502
 
+                lda #fieldWidth-1               ; load the field width (reset every new row)
+                lda (mainData),y                ; get the current data byte
+.byte           equ .-1
+
 .counter        ds.b 1
 charOn          equ '* | normalText
 Foo           equ $42 + 12 * 2

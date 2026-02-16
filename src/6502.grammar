@@ -3,14 +3,12 @@
 @skip { space | Comment }
 
 Line {
-  Statement? eol
+  Label? Statement? eol
 }
 
 Statement {
   Instruction |
-  Directive |
-  Label |
-  Keyword
+  Directive
 }
 
 Label { Identifier ":" | Identifier }
@@ -24,15 +22,24 @@ Register {
 }
 
 Directive {
-  (DirectiveName | PseudoOp) (Expression)*
+  PseudoOp (Expression)*
 }
 
 PseudoOp {
-  @specialize<Identifier, "ORG" | "EQU" | "END" | "org" | "equ" | "end">
+  @specialize<Identifier,
+    "ORG" | "EQU" | "END" | "org" | "equ" | "end" |
+    "ds" | "ds.b" | "ds.w" | "dc" | "dc.b" | "dc.w" | "seg" | "seg.u" |
+    "subroutine" | "mac" | "endm" | "if" | "else" | "endif" |
+    "echo" | "err" | "repeat" | "repend" | "set" |
+    "processor" |
+    ".WORD" | ".word" | ".BYTE" | ".byte" | ".END" | ".end"
+  >
 }
 
-Keyword {
-  @specialize<Identifier,  "processor">
+
+
+CurrentAddress {
+  @specialize<Identifier, ".">
 }
 
 Opcode {
@@ -61,6 +68,7 @@ Expression {
 Value {
   Number |
   Identifier |
+  CurrentAddress |
   String |
   Char
 }
@@ -80,9 +88,9 @@ Operand {
 }
 
 @tokens {
-  Identifier { $[a-zA-Z_] $[a-zA-Z0-9_]* }
+  Identifier { $[a-zA-Z_.] $[a-zA-Z0-9_.]* }
 
-  DirectiveName { "." $[a-zA-Z_]+ }
+
 
   Hex { "$" $[0-9a-fA-F]+ }
   Bin { "%" $[01]+ }
