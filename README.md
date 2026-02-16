@@ -25,6 +25,16 @@ npm run build
 
 This generates the parser artifacts in `dist/`.
 
+## Development
+
+To run the development server with watch mode:
+
+```bash
+npm start
+```
+
+This will start an HTTP server at `http://127.0.0.1:8080` (or another available port) and automatically rebuild the project when files change.
+
 ## Testing
 
 To run the test harness:
