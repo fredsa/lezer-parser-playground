@@ -7,19 +7,27 @@ Line {
 }
 
 Statement {
-  Label |
   Instruction |
-  Directive
+  Directive |
+  Label
 }
 
-Label { Identifier ":" }
+Label { Identifier ":" | Identifier }
 
 Instruction {
   Opcode Operand?
 }
 
+Register {
+  @specialize<Identifier, "X" | "Y" | "A" | "x" | "y" | "a">
+}
+
 Directive {
-  DirectiveName (Number | String | Identifier | ",")*
+  (DirectiveName | PseudoOp) (Number | String | Identifier | ",")*
+}
+
+PseudoOp {
+  @specialize<Identifier, "ORG" | "EQU" | "END" | "org" | "equ" | "end">
 }
 
 Opcode {
@@ -42,10 +50,11 @@ Opcode {
 }
 
 Operand {
-  "#" (Number | Identifier) |
-  "(" (Number | Identifier) "," ("X" | "x") ")" |
-  "(" (Number | Identifier) ")" ("," ("Y" | "y"))? |
-  (Number | Identifier) ("," ("X" | "x" | "Y" | "y"))? |
+  "#" (Number | Identifier | String) |
+  "(" (Number | Identifier) "," Register ")" |
+  "(" (Number | Identifier) ")" ("," Register)? |
+  (Number | Identifier) ("," Register)? |
+  Register |
   String
 }
 
@@ -67,10 +76,15 @@ Operand {
   space { $[ \t]+ }
   eol { $[\n\r]+ }
 
-  "X" "Y" "x" "y"
   ","
   "#"
   "(" ")"
+}
+
+@precedence {
+  PseudoOp,
+  Opcode,
+  Label
 }
 
 @detectDelim

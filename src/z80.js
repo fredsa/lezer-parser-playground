@@ -7,9 +7,9 @@ export const LezerZ80 = LRLanguage.define({
         props: [
             styleTags({
                 Identifier: t.variableName,
-                Directive: t.controlKeyword,
+                Directive: t.function(t.variableName),
                 Opcode: t.keyword,
-                Register: t.invalid,
+                Register: t.typeName,
                 Condition: t.className,
                 Number: t.number,
                 Comment: t.lineComment,

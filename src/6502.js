@@ -14,7 +14,8 @@ export const Lezer6502 = LRLanguage.define({
             }),
             styleTags({
                 Identifier: t.variableName,
-                DirectiveName: t.meta,
+                DirectiveName: t.function(t.variableName),
+                PseudoOp: t.function(t.variableName),
                 Opcode: t.keyword,
                 Label: t.labelName,
                 String: t.string,
