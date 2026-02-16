@@ -1,10 +1,52 @@
-@top Program { (Identifier | "," | ":" | Number)* }
+@top Program { (Opcode | Directive | Register | Condition | Identifier | "," | ":" | Number | "(" | ")" | "+" | "-")* }
+
+Condition {
+  @specialize<Identifier,
+    "nz" | "z" | "nc" | "po" | "pe" | "p" | "m" |
+    "NZ" | "Z" | "NC" | "PO" | "PE" | "P" | "M"
+  >
+}
+
+Register {
+  @specialize<Identifier,
+    "a" | "b" | "c" | "d" | "e" | "h" | "l" | "i" | "r" | "af" | "bc" | "de" | "hl" | "ix" | "iy" | "sp" | "pc" |
+    "A" | "B" | "C" | "D" | "E" | "H" | "L" | "I" | "R" | "AF" | "BC" | "DE" | "HL" | "IX" | "IY" | "SP" | "PC"
+  >
+}
+
+Directive {
+  @specialize<Identifier, "org" | "equ" | "end" | "public" | "ORG" | "EQU" | "END" | "PUBLIC">
+}
+
+Opcode {
+  @specialize<Identifier,
+    "ld" | "push" | "pop" | "inc" | "dec" | "add" | "sub" | "and" | "or" | "xor" |
+    "cp" | "ret" | "jp" | "jr" | "call" | "rst" | "nop" | "halt" | "di" | "ei" |
+    "im" | "ex" | "exx" | "cpl" | "ccf" | "scf" | "rlca" | "rla" | "rrca" | "rra" |
+    "rlc" | "rl" | "rrc" | "rr" | "sla" | "sra" | "srl" | "bit" | "set" | "res" |
+    "out" | "in" | "djnz" |
+    "LD" | "PUSH" | "POP" | "INC" | "DEC" | "ADD" | "SUB" | "AND" | "OR" | "XOR" |
+    "CP" | "RET" | "JP" | "JR" | "CALL" | "RST" | "NOP" | "HALT" | "DI" | "EI" |
+    "IM" | "EX" | "EXX" | "CPL" | "CCF" | "SCF" | "RLCA" | "RLA" | "RRCA" | "RRA" |
+    "RLC" | "RL" | "RRC" | "RR" | "SLA" | "SRA" | "SRL" | "BIT" | "SET" | "RES" |
+    "OUT" | "IN" | "DJNZ"
+  >
+}
 
 @skip { space | Comment }
 
 @tokens {
   Identifier { $[a-zA-Z_] $[a-zA-Z0-9_]* }
-  Number { $[0-9]+ }
+
+  Hex { ("0x" | "$") $[0-9a-fA-F]+ | $[0-9] $[0-9a-fA-F]* "h" }
+  Bin { "%" $[01]+ | $[01]+ "b" }
+  Oct { "0o" $[0-7]+ | $[0-7]+ "o" }
+  Dec { $[0-9]+ }
+
+  Number { Hex | Bin | Oct | Dec }
+
+  @precedence { Number, Identifier }
+
   space { $[ \t\n\r]+ }
   Comment { ";" ![\n]* }
   ","
