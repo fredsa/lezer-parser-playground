@@ -1,0 +1,25 @@
+{
+  "name": "lezer",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js",
+    "build": "rollup -c",
+    "prepare": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@codemirror/language": "^6.12.1",
+    "@lezer/common": "^1.5.1",
+    "@lezer/generator": "^1.8.0",
+    "@lezer/highlight": "^1.2.3",
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "lezer-generator": "^0.13.4",
+    "rollup": "^4.57.1"
+  }
+}

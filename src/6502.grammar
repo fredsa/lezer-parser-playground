@@ -1,0 +1,76 @@
+@top Program { Line* }
+
+@skip { space | Comment }
+
+Line {
+  Statement? eol
+}
+
+Statement {
+  Label |
+  Instruction |
+  Directive
+}
+
+Label { Identifier ":" }
+
+Instruction {
+  Opcode Operand?
+}
+
+Directive {
+  DirectiveName (Number | String | Identifier | ",")*
+}
+
+Opcode {
+  @specialize<Identifier,
+    "ADC" | "AND" | "ASL" | "BCC" | "BCS" | "BEQ" | "BIT" | "BMI" |
+    "BNE" | "BPL" | "BRK" | "BVC" | "BVS" | "CLC" | "CLD" | "CLI" |
+    "CLV" | "CMP" | "CPX" | "CPY" | "DEC" | "DEX" | "DEY" | "EOR" |
+    "INC" | "INX" | "INY" | "JMP" | "JSR" | "LDA" | "LDX" | "LDY" |
+    "LSR" | "NOP" | "ORA" | "PHA" | "PHP" | "PLA" | "PLP" | "ROL" |
+    "ROR" | "RTI" | "RTS" | "SBC" | "SEC" | "SED" | "SEI" | "STA" |
+    "STX" | "STY" | "TAX" | "TAY" | "TSX" | "TXA" | "TXS" | "TYA" |
+    "adc" | "and" | "asl" | "bcc" | "bcs" | "beq" | "bit" | "bmi" |
+    "bne" | "bpl" | "brk" | "bvc" | "bvs" | "clc" | "cld" | "cli" |
+    "clv" | "cmp" | "cpx" | "cpy" | "dec" | "dex" | "dey" | "eor" |
+    "inc" | "inx" | "iny" | "jmp" | "jsr" | "lda" | "ldx" | "ldy" |
+    "lsr" | "nop" | "ora" | "pha" | "php" | "pla" | "plp" | "rol" |
+    "ror" | "rti" | "rts" | "sbc" | "sec" | "sed" | "sei" | "sta" |
+    "stx" | "sty" | "tax" | "tay" | "tsx" | "txa" | "txs" | "tya"
+  >
+}
+
+Operand {
+  "#" (Number | Identifier) |
+  "(" (Number | Identifier) "," ("X" | "x") ")" |
+  "(" (Number | Identifier) ")" ("," ("Y" | "y"))? |
+  (Number | Identifier) ("," ("X" | "x" | "Y" | "y"))? |
+  String
+}
+
+@tokens {
+  Identifier { $[a-zA-Z_] $[a-zA-Z0-9_]* }
+
+  DirectiveName { "." $[a-zA-Z_]+ }
+
+  Hex { "$" $[0-9a-fA-F]+ }
+  Bin { "%" $[01]+ }
+  Dec { $[0-9]+ }
+
+  Number { Hex | Bin | Dec }
+
+  String { '"' (!["\\] | "\\" _)* '"' | "'" (!['\\] | "\\" _)* "'" }
+
+  Comment { ";" ![\n]* }
+
+  space { $[ \t]+ }
+  eol { $[\n\r]+ }
+
+  "X" "Y" "x" "y"
+  ","
+  "#"
+  "(" ")"
+}
+
+@detectDelim
