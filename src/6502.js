@@ -16,12 +16,15 @@ export const Lezer6502 = LRLanguage.define({
                 Identifier: t.variableName,
                 DirectiveName: t.function(t.variableName),
                 PseudoOp: t.function(t.variableName),
+                Keyword: t.controlKeyword,
                 Opcode: t.keyword,
                 Label: t.labelName,
                 String: t.string,
+                Char: t.number,
                 Number: t.number,
                 Register: t.typeName,
                 Comment: t.lineComment,
+                Operator: t.operator,
                 "( )": t.paren
             })
         ]

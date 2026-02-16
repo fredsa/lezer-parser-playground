@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Lezer 6502 & Z80 Demo</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; }
-    h2 { margin-top: 0; }
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
     .editor-container {
       display: flex;
       gap: 20px;
       height: 80vh;
     }
+
+    .editor-container2 {
+      height: 100%;
+    }
+
     .editor-wrapper {
       flex: 1;
       display: flex;
@@ -20,29 +34,33 @@
       border-radius: 4px;
       overflow: hidden;
     }
+
     .editor-header {
       padding: 10px;
       background: #eee;
       border-bottom: 1px solid #ccc;
       font-weight: bold;
     }
+
     .cm-editor {
       height: 100%;
     }
   </style>
 </head>
+
 <body>
   <h1>Lezer Assembly Parser Demo</h1>
   <div class="editor-container">
     <div class="editor-wrapper">
       <div class="editor-header">6502 Assembly</div>
-      <div id="editor-6502"></div>
+      <div class="editor-container2" id="editor-6502"></div>
     </div>
     <div class="editor-wrapper">
       <div class="editor-header">Z80 Assembly</div>
-      <div id="editor-z80"></div>
+      <div class="editor-container2" id="editor-z80"></div>
     </div>
   </div>
   <script type="module" src="./dist/demo.bundle.js"></script>
 </body>
+
 </html>

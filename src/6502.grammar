@@ -9,7 +9,8 @@ Line {
 Statement {
   Instruction |
   Directive |
-  Label
+  Label |
+  Keyword
 }
 
 Label { Identifier ":" | Identifier }
@@ -23,11 +24,15 @@ Register {
 }
 
 Directive {
-  (DirectiveName | PseudoOp) (Number | String | Identifier | ",")*
+  (DirectiveName | PseudoOp) (Expression)*
 }
 
 PseudoOp {
   @specialize<Identifier, "ORG" | "EQU" | "END" | "org" | "equ" | "end">
+}
+
+Keyword {
+  @specialize<Identifier,  "processor">
 }
 
 Opcode {
@@ -49,13 +54,29 @@ Opcode {
   >
 }
 
+Expression {
+  (Value) (Operator Value)*
+}
+
+Value {
+  Number |
+  Identifier |
+  String |
+  Char
+}
+
+Operator {
+  "+" | "-" | "*" | "/" | "^" | "&" | "|" | "<<" | ">>" | "==" | "<" | ">" | "<=" | ">=" | "!="
+}
+
 Operand {
   "#" (Number | Identifier | String) |
   "(" (Number | Identifier) "," Register ")" |
   "(" (Number | Identifier) ")" ("," Register)? |
   (Number | Identifier) ("," Register)? |
   Register |
-  String
+  String |
+  Char
 }
 
 @tokens {
@@ -69,7 +90,9 @@ Operand {
 
   Number { Hex | Bin | Dec }
 
-  String { '"' (!["\\] | "\\" _)* '"' | "'" (!['\\] | "\\" _)* "'" }
+  String { '"' (!["\\\n] | "\\" _)* '"' }
+
+  Char { "'" ![\n] "'"? }
 
   Comment { ";" ![\n]* }
 
@@ -79,6 +102,7 @@ Operand {
   ","
   "#"
   "(" ")"
+  @precedence { String, Char }
 }
 
 @precedence {
