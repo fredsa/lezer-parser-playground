@@ -79,9 +79,9 @@ Operator {
 
 Operand {
   "#" (Number | Identifier | String) |
-  "(" (Number | Identifier) "," Register ")" |
-  "(" (Number | Identifier) ")" ("," Register)? |
-  (Number | Identifier) ("," Register)? |
+  "(" (Number | Identifier) Comma Register ")" |
+  "(" (Number | Identifier) ")" (Comma Register)? |
+  (Number | Identifier) (Comma Register)? |
   Register |
   String |
   Char
@@ -107,7 +107,7 @@ Operand {
   space { $[ \t]+ }
   eol { $[\n\r]+ }
 
-  ","
+  Comma { "," }
   "#"
   "(" ")"
   @precedence { String, Char }

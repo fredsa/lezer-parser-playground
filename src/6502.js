@@ -24,6 +24,7 @@ export const Lezer6502 = LRLanguage.define({
                 Register: t.typeName,
                 Comment: t.lineComment,
                 Operator: t.operator,
+                Comma: t.separator,
                 "( )": t.paren
             })
         ]
