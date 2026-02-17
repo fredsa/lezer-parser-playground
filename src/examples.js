@@ -7,8 +7,15 @@ export const example6502 = `
 
 	processor 6502
 
-                lda #fieldWidth-1               ; load the field width (reset every new row)
-                lda (mainData),y                ; get the current data byte
+        lda <#addr
+        lda >#addr
+        lda #foo > 2
+        lda !$ff
+        lda !$ff
+        lda %1 << 8
+
+        lda #fieldWidth-1               ; load the field width (reset every new row)
+        lda (mainData),y                ; get the current data byte
 .byte           equ .-1
 
 .counter        ds.b 1

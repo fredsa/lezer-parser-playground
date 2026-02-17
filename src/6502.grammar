@@ -60,8 +60,23 @@ Opcode {
 }
 
 Expression {
-  (Value) (Operator Value)*
+  Expression !logic LogicOp Expression |
+  Expression !bit BitOp Expression |
+  Expression !compare (CompareOp | BinaryLt | BinaryGt) Expression |
+  Expression !term (ArithOp | Plus | Minus | Percent) Expression |
+  UnaryExpression |
+  Value |
+  "(" Expression ")"
 }
+
+UnaryExpression {
+  (Plus | Minus | Not | Tilde | UnaryLt | UnaryGt) Expression
+}
+
+BinaryLt { lt !bin }
+BinaryGt { gt !bin }
+UnaryLt { lt !un }
+UnaryGt { gt !un }
 
 Value {
   Number |
@@ -71,14 +86,9 @@ Value {
   Char
 }
 
-Operator {
-  "+" | "-" | "*" | "/" | "^" | "&" | "|" | "<<" | ">>" | "==" | "<" | ">" | "<=" | ">=" | "!="
-}
-
 Operand {
   "#" Expression |
   "(" Expression Comma Register ")" |
-  "(" Expression ")" (Comma Register)? |
   Expression (Comma Register)? |
   Register
 }
@@ -86,11 +96,11 @@ Operand {
 @tokens {
   Identifier { $[a-zA-Z_.] $[a-zA-Z0-9_.]* }
 
-  Hex { "$" $[0-9a-fA-F]+ }
-  Bin { "%" $[01]+ }
-  Dec { $[0-9]+ }
-
-  Number { Hex | Bin | Dec }
+  Number {
+    "$" $[0-9a-fA-F]+ |
+    "%" $[01]+ |
+    $[0-9]+
+  }
 
   String { '"' (!["\\\n] | "\\" _)* '"' }
 
@@ -104,10 +114,32 @@ Operand {
   Comma { "," }
   "#"
   "(" ")"
-  @precedence { String, Char }
+
+  ArithOp { "*" | "/" }
+  Percent { "%" }
+  Plus { "+" }
+  Minus { "-" }
+
+  BitOp { "&" | "|" | "^" | "<<" | ">>" }
+  Tilde { "~" }
+
+  LogicOp { "&&" | "||" }
+  Not { "!" }
+
+  CompareOp { "==" | "!=" | "<=" | ">=" }
+  lt { "<" }
+  gt { ">" }
+
+  @precedence { String, Char, Number, Percent, Identifier }
 }
 
 @precedence {
+  un,
+  term @left,
+  compare @left,
+  bit @left,
+  logic @left,
+  bin @left,
   PseudoOp,
   Opcode,
   Label
