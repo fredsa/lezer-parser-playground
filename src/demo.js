@@ -2,7 +2,7 @@ import { oneDark } from "@codemirror/theme-one-dark"
 import { EditorView, basicSetup } from "codemirror"
 import { debugHighlightTagsTooltip } from "./debug.js"
 import { example6502, exampleZ80 } from "./examples.js"
-import { lezer6502, lezerZ80 } from "./index.js"
+import { asm6502, lezerZ80 } from "./index.js"
 
 const editorTheme = EditorView.theme({
     "&": {
@@ -16,7 +16,7 @@ new EditorView({
         basicSetup,
         editorTheme,
         oneDark,
-        lezer6502(),
+        asm6502(),
         debugHighlightTagsTooltip,
     ],
     parent: document.getElementById("editor-6502")
