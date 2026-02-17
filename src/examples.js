@@ -605,11 +605,15 @@ loop    ld      a,(hl)      ; Copy 1 source byte
 
 ; hello.asm
 ;----------
-FOO         equ  6*7 + 1 ; 43
-BAR         equ  %1 << 8 ; 128
+aO          equ  -1        ; $ff
+a2          equ  ~$aa      ; $55
+FOO         equ  6*7 + 1   ; 43
+FOO2        equ  6*(7 + 1) ; 48
+BAR         equ  %1 << 8   ; 128
 
 CHAN_OPEN   equ  5633
 PRINT       equ  8252
+xx          equ  $8000
 
             org  0x5ccb
 loop
