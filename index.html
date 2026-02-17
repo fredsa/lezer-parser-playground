@@ -15,14 +15,14 @@
       margin-top: 0;
     }
 
-    .editor-container {
+    .editors-panel {
       display: flex;
       gap: 20px;
       height: 80vh;
     }
 
-    .editor-container2 {
-      height: 100%;
+    .editor-container {
+      overflow: auto;
     }
 
     .editor-wrapper {
@@ -50,21 +50,21 @@
 
 <body>
   <h1>Lezer parser playground</h1>
-  <div class="editor-container">
+  <div class="editors-panel">
 
     <div class="editor-wrapper">
       <div class="editor-header">6502 Assembly</div>
-      <div class="editor-container2" id="editor-6502"></div>
+      <div class="editor-container" id="editor-6502"></div>
     </div>
 
     <div class="editor-wrapper">
       <div class="editor-header">Z80 Assembly</div>
-      <div class="editor-container2" id="editor-z80"></div>
+      <div class="editor-container" id="editor-z80"></div>
     </div>
 
     <div class="editor-wrapper">
       <div class="editor-header">C</div>
-      <div class="editor-container2" id="editor-c"></div>
+      <div class="editor-container" id="editor-c"></div>
     </div>
 
   </div>
