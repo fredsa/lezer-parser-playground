@@ -10,7 +10,9 @@ Statement {
   Instruction |
   Directive |
   MacroDef |
-  MacEnd
+  MacEnd |
+  ControlOp |
+  ErrorOp
 }
 
 Label { Identifier ":" | Identifier }
@@ -31,8 +33,8 @@ PseudoOp {
   @specialize<Identifier,
     "ORG" | "EQU" | "END" | "org" | "equ" | "end" |
     "ds" | "ds.b" | "ds.w" | "dc" | "dc.b" | "dc.w" | "seg" | "seg.u" |
-    "subroutine" | "if" | "else" | "endif" |
-    "echo" | "err" | "repeat" | "repend" | "set" |
+    "subroutine" |
+    "echo" | "repeat" | "repend" | "set" |
     "processor" |
     ".WORD" | ".word" | ".BYTE" | ".byte" | ".END" | ".end"
   >
@@ -40,6 +42,9 @@ PseudoOp {
 
 Mac { @specialize<Identifier, "mac"> }
 MacEnd { @specialize<Identifier, "endm"> }
+
+ControlOp { @specialize<Identifier, "if" | "else" | "endif"> }
+ErrorOp { @specialize<Identifier, "err"> }
 
 MacroDef {
   Mac Identifier

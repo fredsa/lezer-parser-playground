@@ -39,6 +39,8 @@ export const Lezer6502 = LRLanguage.define({
                 Mac: t.definitionKeyword,
                 MacEnd: t.definitionKeyword,
                 "MacroDef/Identifier": t.macroName,
+                ControlOp: t.controlKeyword,
+                ErrorOp: t.keyword,
                 Comma: t.separator,
                 "( )": t.paren
             })
