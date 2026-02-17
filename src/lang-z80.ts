@@ -1,6 +1,6 @@
 import { LRLanguage, LanguageSupport } from "@codemirror/language"
 import { styleTags, tags as t } from "@lezer/highlight"
-import { parser } from "./z80.grammar"
+import { parser } from "./lang-z80.grammar"
 
 export const LezerZ80: LRLanguage = LRLanguage.define({
     parser: parser.configure({

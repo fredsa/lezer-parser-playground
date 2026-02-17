@@ -588,18 +588,17 @@ datapg1_end     equ .
 `;
 
 export const exampleZ80 = `; https://en.wikipedia.org/wiki/Zilog_Z80#Example_code
-             org     1000h; Origin at 1000h
- memcpy      public
-             push    af; Save AF like LDIR
- loop        ld      a, (hl); Copy 1 source byte
-ld(de), a; to its destination
-             inc     hl; Bump source pointer
-             ld      hl, 0x1234; Test hl in load
-             inc     de; Bump dest pointer
-             dec     bc; Count the copied byte
-             ld      a, b; Test BC for zero
-             or      c           ; If BC != 0,
-        jp      nz, loop; repeat the loop
-             pop     af; Restore AF
-ret; Return
-end`;
+        org     1000h       ; Origin at 1000h
+memcpy  public
+        push    af          ; Save AF like LDIR
+loop    ld      a,(hl)      ; Copy 1 source byte
+        ld      (de),a      ; to its destination
+        inc     hl          ; Bump source pointer
+        inc     de          ; Bump dest pointer
+        dec     bc          ; Count the copied byte
+        ld      a,b         ; Test BC for zero
+        or      c           ; If BC != 0,
+        jp      nz,loop     ; repeat the loop
+        pop     af          ; Restore AF
+        ret                 ; Return
+        end`;
