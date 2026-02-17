@@ -8,7 +8,9 @@ Line {
 
 Statement {
   Instruction |
-  Directive
+  Directive |
+  MacroDef |
+  MacEnd
 }
 
 Label { Identifier ":" | Identifier }
@@ -29,11 +31,18 @@ PseudoOp {
   @specialize<Identifier,
     "ORG" | "EQU" | "END" | "org" | "equ" | "end" |
     "ds" | "ds.b" | "ds.w" | "dc" | "dc.b" | "dc.w" | "seg" | "seg.u" |
-    "subroutine" | "mac" | "endm" | "if" | "else" | "endif" |
+    "subroutine" | "if" | "else" | "endif" |
     "echo" | "err" | "repeat" | "repend" | "set" |
     "processor" |
     ".WORD" | ".word" | ".BYTE" | ".byte" | ".END" | ".end"
   >
+}
+
+Mac { @specialize<Identifier, "mac"> }
+MacEnd { @specialize<Identifier, "endm"> }
+
+MacroDef {
+  Mac Identifier
 }
 
 CurrentAddress {

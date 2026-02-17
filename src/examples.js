@@ -7,6 +7,15 @@ export const example6502 = `
 
 	processor 6502
 
+        mac LOG_REGION
+        if {3} && >. != >{2}
+        echo "(",{2},"-",.,")",{1},"*** BOUNDARY CROSSED ***"
+        err
+        else
+        echo "(",{2},"-",.,")",{1}
+        endif
+        endm
+
         lda <#addr
         lda >#addr
         lda #foo > 2
