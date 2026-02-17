@@ -1,9 +1,8 @@
-
-import { parser } from "./6502.grammar"
-import { LRLanguage, LanguageSupport, indentNodeProp, foldNodeProp, foldInside, delimitedIndent } from "@codemirror/language"
+import { LRLanguage, LanguageSupport, delimitedIndent, foldInside, foldNodeProp, indentNodeProp } from "@codemirror/language"
 import { styleTags, tags as t } from "@lezer/highlight"
+import { parser } from "./6502.grammar"
 
-export const Lezer6502 = LRLanguage.define({
+export const Lezer6502: LRLanguage = LRLanguage.define({
     parser: parser.configure({
         props: [
             indentNodeProp.add({
@@ -51,6 +50,6 @@ export const Lezer6502 = LRLanguage.define({
     }
 })
 
-export function lezer6502() {
+export function lezer6502(): LanguageSupport {
     return new LanguageSupport(Lezer6502)
 }

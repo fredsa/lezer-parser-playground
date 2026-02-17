@@ -1,2 +1,2 @@
-export * from "./6502.js"
+export * from "./6502.ts"
 export * from "./z80.js"
