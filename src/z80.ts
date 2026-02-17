@@ -1,8 +1,8 @@
-import { parser } from "./z80.grammar"
-import { styleTags, tags as t } from "@lezer/highlight"
 import { LRLanguage, LanguageSupport } from "@codemirror/language"
+import { styleTags, tags as t } from "@lezer/highlight"
+import { parser } from "./z80.grammar"
 
-export const LezerZ80 = LRLanguage.define({
+export const LezerZ80: LRLanguage = LRLanguage.define({
     parser: parser.configure({
         props: [
             styleTags({
@@ -22,6 +22,6 @@ export const LezerZ80 = LRLanguage.define({
     }
 })
 
-export function lezerZ80() {
+export function lezerZ80(): LanguageSupport {
     return new LanguageSupport(LezerZ80)
 }
