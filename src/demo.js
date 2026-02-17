@@ -1,7 +1,7 @@
 import { oneDark } from "@codemirror/theme-one-dark"
 import { EditorView, basicSetup } from "codemirror"
 import { debugHighlightTagsTooltip } from "./debug.js"
-import { example6502, exampleZ80, exampleC } from "./examples.js"
+import { example6502, exampleZ80, example8080, exampleC } from "./examples.js"
 import { asm6502, lezerZ80 } from "./index.js"
 import { cpp } from "@codemirror/lang-cpp"
 
@@ -17,7 +17,7 @@ new EditorView({
 });
 
 new EditorView({
-    doc: exampleZ80,
+    doc: exampleZ80 + "\n" + example8080,
     extensions: [
         basicSetup,
         oneDark,
