@@ -38,16 +38,28 @@ export const debugHighlightTagsTooltip = hoverTooltip((view, pos, side) => {
         arrow: true,
         create(view) {
             let dom = document.createElement("div");
-            dom.className = "cm-debug-tooltip";
-            dom.textContent = `Parser: ${parserType}\n${treeName}: ${tree.name}\nTags  : ${tagList}`;
-            dom.style.whiteSpace = "pre-wrap";
-            dom.style.fontFamily = "monospace";
-            dom.style.background = "#333";
-            dom.style.color = "white";
-            dom.style.padding = "2px 8px";
-            dom.style.borderRadius = "4px";
-            dom.style.fontSize = "12px";
-            dom.style.border = "1px solid #555";
+            // Zero size element, so tooltip quickly dismisses when mouse moves over it, force
+            // CodeMirror's getBoundingClientRect() in isInTooltip() to always return false.
+            dom.style.overflow = "visible";
+            dom.style.height = "0";
+            dom.style.width = "0";
+            // Tooltip content.
+            let inner = document.createElement("div");
+            inner.className = "cm-debug-tooltip";
+            inner.textContent = `Parser: ${parserType}\n${treeName}: ${tree.name}\nTags  : ${tagList}`;
+            inner.style.whiteSpace = "pre-wrap";
+            inner.style.fontFamily = "monospace";
+            inner.style.background = "#333";
+            inner.style.color = "white";
+            inner.style.padding = "2px 8px";
+            inner.style.borderRadius = "4px";
+            inner.style.fontSize = "12px";
+            inner.style.border = "1px solid #555";
+            inner.style.pointerEvents = "none";
+            inner.style.position = "absolute";
+            inner.style.bottom = "0";
+            inner.style.width = "max-content";
+            dom.appendChild(inner);
             return { dom };
         }
     };
