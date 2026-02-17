@@ -1,12 +1,6 @@
-import { syntaxTree, LRLanguage, StreamLanguage, language } from "@codemirror/language";
+import { LRLanguage, StreamLanguage, language, syntaxTree } from "@codemirror/language";
 import { hoverTooltip } from "@codemirror/view";
-import { getStyleTags, tags } from "@lezer/highlight";
-
-// Create a reverse map for tags.
-const tagNames = new Map<any, string>();
-for (const [name, tag] of Object.entries(tags)) {
-    tagNames.set(tag, name);
-}
+import { getStyleTags } from "@lezer/highlight";
 
 // Tooltip to show tags, useful for theme and parser development.
 export const debugHighlightTagsTooltip = hoverTooltip((view, pos, side) => {
@@ -15,14 +9,7 @@ export const debugHighlightTagsTooltip = hoverTooltip((view, pos, side) => {
     let tagList = "";
     if (style) {
         for (let tag of style.tags) {
-            // Check tag and its parents.
-            for (let t of tag.set) {
-                if (tagNames.has(t)) {
-                    if (tagList) tagList += ", ";
-                    tagList += tagNames.get(t);
-                    break;
-                }
-            }
+            tagList += tag.set.join(" < ") + "\n";
         }
     }
 
